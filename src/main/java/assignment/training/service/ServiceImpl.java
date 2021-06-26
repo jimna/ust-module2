@@ -28,5 +28,14 @@ public class ServiceImpl implements Service {
 		
 		 dao.deleteById(id);
 	}
+	
+	@Override
+	public boolean findPerson(Integer id) {
+		if(dao.findById(id).isPresent()){
+			return true;
+		}
+		
+		return false;
+	}
 
 }

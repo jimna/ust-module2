@@ -3,6 +3,8 @@ package assignment.training.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api
-@RequestMapping("/api")
+@RequestMapping("/person")
 public class Controller {
 	@Autowired
 	Service service;
@@ -43,7 +45,23 @@ public class Controller {
 	public ResponseEntity<?> update(@PathVariable() Integer id,Person person){
 		return new ResponseEntity<Person>(service.updatePerson(id, person), HttpStatus.OK);
 	}
+	@PutMapping("/delete/{id}")
+	public ResponseEntity<?> delete(@PathVariable() Integer id){
+		service.deletePerson(id);
+		return new ResponseEntity<String>("Successfully Deleted " + id, HttpStatus.OK);
+		
+	}
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findPerson(@PathVariable() Integer id){
+		
+		
+		if(service.findPerson(id)) {
+		return new ResponseEntity<String>("person already exist" + id , HttpStatus.OK);
+	}
+		else
+			return new ResponseEntity<String>("person  is not present"+ id ,HttpStatus.EXPECTATION_FAILED);
 	
-	
+	}
+
 
 }

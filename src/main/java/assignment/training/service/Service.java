@@ -10,6 +10,8 @@ public interface Service {
 	
 	public void deletePerson(Integer id);
 	
+	public boolean findPerson( Integer id);
+	
 	
 
 }
