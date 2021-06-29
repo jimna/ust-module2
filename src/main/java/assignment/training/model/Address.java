@@ -11,10 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 
 
 @Entity
-@Table(name="address123")
+@Table(name="address")
 public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +37,11 @@ public class Address {
 	@Column(length = 6)
 	Integer pincode;
 	
+//	@ManyToOne(targetEntity =Person.class )
+//	@OnDelete(action = OnDeleteAction.CASCADE)
+//	@Cascade(value = CascadeType.ALL)
 	@ManyToOne
+	@JoinColumn(name="person_id")
 	private Person  person;
 
 //	@ManyToOne(fetch = FetchType.LAZY,optional=false)
@@ -79,6 +88,14 @@ public class Address {
 		this.pincode = pincode;
 	}
 	
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
 	public Address() {
 		
 	}

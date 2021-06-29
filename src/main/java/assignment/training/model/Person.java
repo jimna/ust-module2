@@ -11,8 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="person123")
+@Entity(name="person")
+@Table(name="person")
 public class Person {
 	@Id
 	Integer id;
@@ -31,7 +31,9 @@ public class Person {
 	@Column(length = 8)
 	String createdDate;
 	
-	@OneToMany(cascade= CascadeType.ALL)
+	@OneToMany( mappedBy = "person", cascade= CascadeType.ALL)
+	
+
 	public List<Address> address;
 	
 
@@ -83,6 +85,10 @@ public class Person {
 	}
 
 	public void setAddress(List<Address> address) {
+		if (address != null) {
+			address.forEach(add->add.setPerson(this));
+        }
+
 		this.address = address;
 	}
 

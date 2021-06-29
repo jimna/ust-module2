@@ -1,12 +1,14 @@
 package assignment.training.exception;
 
-public class UserNotFoundException extends Exception {
+public class PersonIsAlreadyPresent extends Exception {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public UserNotFoundException(String message) {
+	public PersonIsAlreadyPresent(String message) {
 		super(message);
 	}
+
 }

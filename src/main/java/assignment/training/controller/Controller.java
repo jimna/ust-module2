@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import assignment.training.exception.UserNotFoundException;
 import assignment.training.model.Person;
 import assignment.training.service.Service;
 import io.swagger.annotations.Api;
@@ -46,12 +45,20 @@ public class Controller {
 		}
 	}
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable() Integer id, @RequestBody Person person){
-		return new ResponseEntity<Person>(service.updatePerson(id, person), HttpStatus.OK);
+	public ResponseEntity<?> update( @RequestBody Person person){
+		try {
+			return new ResponseEntity<Person>(service.updatePerson( person), HttpStatus.OK);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.OK);
+		}
 	}
 	@PutMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable() Integer id){
-		service.deletePerson(id);
+		try {
+			service.deletePerson(id);
+		} catch (UserNotFoundException e) {
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.OK);
+		}
 		return new ResponseEntity<String>("Successfully Deleted " + id, HttpStatus.OK);
 		
 	}
@@ -63,7 +70,7 @@ public class Controller {
 		return new ResponseEntity<String>("person already exist" + id , HttpStatus.OK);
 	}
 		else
-			return new ResponseEntity<String>("person  is not present"+ id ,HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<String>("person  is not present"+ id ,HttpStatus.OK);
 	
 	}
 
