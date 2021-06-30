@@ -1,39 +1,51 @@
 package assignment.training.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity
+@Entity(name="person")
+@Table(name="person")
 public class Person {
 	@Id
 	Integer id;
 	@Column(length = 250)
 	String firstName;
-	
+
 	@Column(length = 250)
 	String lastName;
-	
-	@Column(length = 10)
-	String  dateOfBirth;
-	
-	
-	Address address;
-	
-	@Column(length =8)
-	String createdDate;
 
-	public Person(Integer id, String firstName, String lastName, String dateOfBirth, Address address,
+	@Column(length = 10)
+	String dateOfBirth;
+
+//	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	List<Address> address;
+
+	@Column(length = 8)
+	String createdDate;
+	
+	@OneToMany( mappedBy = "person", cascade= CascadeType.ALL)
+	
+
+	public List<Address> address;
+	
+
+	public Person(Integer id, String firstName, String lastName, String dateOfBirth, List<Address> address,
 			String createdDate) {
-		
+
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 		this.createdDate = createdDate;
-		
-		
 	}
 
 	public Integer getId() {
@@ -68,11 +80,15 @@ public class Person {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Address getAddress() {
+	public List<Address> getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(List<Address> address) {
+		if (address != null) {
+			address.forEach(add->add.setPerson(this));
+        }
+
 		this.address = address;
 	}
 
@@ -83,10 +99,9 @@ public class Person {
 	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
-	
-	
+
 	public Person() {
-		
+
 	}
 
 	@Override
@@ -94,9 +109,5 @@ public class Person {
 		return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth="
 				+ dateOfBirth + ", address=" + address + ", createdDate=" + createdDate + "]";
 	}
-	
-	
+
 }
-
-
-	
