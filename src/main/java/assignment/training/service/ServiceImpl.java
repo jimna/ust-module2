@@ -32,7 +32,7 @@ public class ServiceImpl implements Service {
 			throw new UserNotFoundException("person is not  present");
 		}
 		
-		
+		dao.deleteById(person.getId());
 		return dao.save(person);
 		
 	}

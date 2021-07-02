@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
-<configuration debug="true">
+<configuration debug="false">
 	<property name="LOG_FILE_LOCATION" value="logs" />
 	<property name="LOG_FILE_NAME" value="Assignment" />
 	<property name="LOG_FILE_EXTENSION" value=".log" />
@@ -25,11 +25,11 @@
 		</encoder>
 	</appender>
 	<!-- Send logs to both console and file audit -->
-	<logger name="Assignment" level="debug" additivity="false">
+	<logger name="Assignment" level="info" additivity="false">
 		<appender-ref ref="FILE-AUDIT" />
 		<appender-ref ref="STDOUT" />
 	</logger>
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="FILE-AUDIT" />
 		<appender-ref ref="STDOUT" />
 	</root>

@@ -45,9 +45,10 @@ public class Controller {
 		}
 	}
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update( @RequestBody Person person){
+	public ResponseEntity<?> update(@RequestBody Person person){
 		try {
-			return new ResponseEntity<Person>(service.updatePerson( person), HttpStatus.OK);
+			service.updatePerson(person);
+			return new ResponseEntity<String>("Updated", HttpStatus.OK);
 		} catch (UserNotFoundException e) {
 			return new ResponseEntity<String>(e.getMessage(),HttpStatus.OK);
 		}
